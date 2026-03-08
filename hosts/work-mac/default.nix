@@ -38,7 +38,7 @@
       "docker-desktop"
       "firefox"
       "flux-app"
-      "font-jetbrains-mono-nerd-font"
+      "font-lilex-nerd-font"
       "ghostty"
       "google-chrome"
       "google-chrome@canary"

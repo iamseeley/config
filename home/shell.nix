@@ -16,8 +16,10 @@ let theme = import ./theme.nix; in
       gc  = "git commit";
       gp  = "git push";
       v   = "nvim";
+      rebuild = "sudo darwin-rebuild switch --flake ~/config";
     };
     interactiveShellInit = ''
+      fish_add_path --prepend /run/current-system/sw/bin
       set fish_greeting
 
       set fish_color_normal ${theme.fg}

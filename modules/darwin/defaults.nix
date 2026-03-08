@@ -9,7 +9,7 @@
     };
 
     finder = {
-      AppleShowAllExtensions = true;
+      AppleShowAllExtensions = false;
       FXEnableExtensionChangeWarning = false;
       FXPreferredViewStyle = "Nlsv";
       ShowPathbar = true;
@@ -17,7 +17,7 @@
     };
 
     NSGlobalDomain = {
-      AppleShowAllExtensions = true;
+      AppleShowAllExtensions = false;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
       NSAutomaticCapitalizationEnabled = false;

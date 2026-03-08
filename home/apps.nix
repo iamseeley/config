@@ -19,7 +19,7 @@ in
     gimp
     zoom-us
     obs-studio
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override { fonts = [ "Lilex" ]; })
   ];
 
   fonts.fontconfig.enable = true;

@@ -9,8 +9,8 @@ let theme = import ./theme.nix; in
         opacity = 0.95;
       };
       font = {
-        size = 14.0;
-        normal.family = "JetBrainsMono Nerd Font";
+        size = 12.0;
+        normal.family = "Lilex Nerd Font";
         bold.style = "Bold";
         italic.style = "Italic";
       };
