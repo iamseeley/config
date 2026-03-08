@@ -30,6 +30,7 @@
     casks = [
       "1password"
       "1password-cli"
+      "alacritty"
       "alt-tab"
       "anki"
       "balenaetcher"
@@ -38,6 +39,7 @@
       "firefox"
       "flux-app"
       "font-jetbrains-mono-nerd-font"
+      "ghostty"
       "google-chrome"
       "google-chrome@canary"
       "hammerspoon"
