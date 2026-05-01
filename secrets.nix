@@ -1,0 +1,21 @@
+let
+  tseeley = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6eIhu9iBunU+qDWOhzlRl7ysd630O29jR6Zk0125da";
+
+  # Replace each null with the host's ssh-ed25519 pubkey after first deploy:
+  #   ssh-keyscan SERVER_IP | grep ed25519
+  # then run `agenix --rekey` from the repo root.
+  server-mail = null;
+  server-services = null;
+
+  keys = builtins.filter (k: k != null);
+in
+{
+  "secrets/stalwart-admin.age".publicKeys       = keys [ tseeley server-mail ];
+  "secrets/directus-secret.age".publicKeys      = keys [ tseeley server-services ];
+  "secrets/directus-admin.age".publicKeys       = keys [ tseeley server-services ];
+  "secrets/directus-db-password.age".publicKeys = keys [ tseeley server-services ];
+  "secrets/umami-app-secret.age".publicKeys     = keys [ tseeley server-services ];
+  "secrets/umami-db-password.age".publicKeys    = keys [ tseeley server-services ];
+  "secrets/miniflux-admin.age".publicKeys       = keys [ tseeley server-services ];
+  "secrets/miniflux-db-password.age".publicKeys = keys [ tseeley server-services ];
+}
