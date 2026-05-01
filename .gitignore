@@ -1,5 +1,2 @@
 .DS_Store
-nix-config-plan*.md
 result
-.factory/
-.worktrees/
