@@ -14,6 +14,13 @@ vim.lsp.config['rust_analyzer'] = {
   capabilities = capabilities,
 }
 
+vim.lsp.config['zls'] = {
+  cmd = { 'zls' },
+  filetypes = { 'zig' },
+  root_markers = { 'build.zig', 'build.zig.zon' },
+  capabilities = capabilities,
+}
+
 vim.lsp.config['nixd'] = {
   cmd = { 'nixd' },
   filetypes = { 'nix' },
@@ -27,7 +34,7 @@ vim.lsp.config['pyright'] = {
   capabilities = capabilities,
 }
 
-vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright' })
+vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright', 'zls' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)

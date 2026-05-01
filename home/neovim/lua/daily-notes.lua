@@ -8,6 +8,7 @@ vim.g.vimwiki_list = {
     template_ext = '.md',
   }
 }
+vim.g.vimwiki_global_ext = 0
 
 local function open_daily_note()
   local date = os.date("%Y-%m-%d")

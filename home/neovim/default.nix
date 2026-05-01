@@ -12,6 +12,7 @@ let
     black
     rustfmt
     nixfmt
+    zls
   ];
 in
 {
@@ -24,6 +25,8 @@ in
     ./conform.nix
     ./oil.nix
     ./daily-notes.nix
+    ./git.nix
+    ./markdown.nix
   ];
 
   programs.neovim = {
