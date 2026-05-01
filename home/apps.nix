@@ -1,4 +1,6 @@
-let theme = import ./theme.nix; in
+let
+  theme = import ./theme.nix;
+in
 { pkgs, inputs, ... }:
 let
   addons = inputs.firefox-addons.packages.${pkgs.system};
@@ -6,7 +8,7 @@ in
 {
   home.packages = with pkgs; [
     _1password-gui
-    _1password
+    _1password-cli
     anki
     google-chrome
     mullvad-vpn
@@ -40,21 +42,47 @@ in
           name = "Toolbar";
           toolbar = true;
           bookmarks = [
-            { name = "GitHub";    url = "https://github.com"; }
-            { name = "Kagi";      url = "https://kagi.com"; }
-            { name = "NixOS";     url = "https://search.nixos.org/packages"; }
-            { name = "HN";        url = "https://news.ycombinator.com"; }
+            {
+              name = "GitHub";
+              url = "https://github.com";
+            }
+            {
+              name = "Kagi";
+              url = "https://kagi.com";
+            }
+            {
+              name = "NixOS";
+              url = "https://search.nixos.org/packages";
+            }
+            {
+              name = "HN";
+              url = "https://news.ycombinator.com";
+            }
           ];
         }
         {
           name = ".me";
           bookmarks = [
-            { name = "Mail Admin";  url = "https://mail.seeley.me:443"; }
-            { name = "CMS";         url = "https://cms.seeley.me"; }
-            { name = "Analytics";   url = "https://stats.seeley.me"; }
-            { name = "Feeds";       url = "https://feeds.seeley.me"; }
-            { name = "Bookmarks";   url = "https://bookmarks.seeley.me"; }
-            { name = "Open WebUI";  url = "http://llm-box.local:8080"; }
+            {
+              name = "Mail Admin";
+              url = "https://mail.seeley.me:443";
+            }
+            {
+              name = "CMS";
+              url = "https://cms.seeley.me";
+            }
+            {
+              name = "Analytics";
+              url = "https://stats.seeley.me";
+            }
+            {
+              name = "Feeds";
+              url = "https://feeds.seeley.me";
+            }
+            {
+              name = "Bookmarks";
+              url = "https://bookmarks.seeley.me";
+            }
           ];
         }
       ];

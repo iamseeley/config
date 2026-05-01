@@ -2,7 +2,7 @@ let theme = import ./theme.nix; in
 { pkgs, ... }: {
   programs.ghostty = {
     enable = true;
-    package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    package = if pkgs.stdenv.isDarwin then null else pkgs.ghostty;
     settings = {
       font-family = "Lilex Nerd Font";
       font-size = 12;

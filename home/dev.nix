@@ -1,14 +1,18 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [
+{ pkgs, inputs, ... }:
+{
+  home.packages = (with pkgs; [
     gh
     jq
     yq
     httpie
     htop
     curl
-    docker
     claude-code
     codex
+    lnav
+    doctl
+  ]) ++ [
+    inputs.agenix.packages.${pkgs.system}.default
   ];
 
   programs.direnv = {

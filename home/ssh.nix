@@ -11,10 +11,6 @@
         hostname = "services.seeley.me";
         user = "root";
       };
-      "llm-box" = {
-        hostname = "llm-box.local";
-        user = "tseeley";
-      };
     };
   };
 }

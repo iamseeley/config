@@ -1,26 +1,26 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+{
   imports = [
     ../../modules/darwin/defaults.nix
     ../../modules/darwin/yabai.nix
   ];
-
   networking.hostName = "work-mac";
   system.stateVersion = 5;
   system.primaryUser = "tseeley";
   nix.enable = false;
   nixpkgs.config.allowUnfree = true;
-
   programs.fish.enable = true;
 
   users.users.tseeley.home = "/Users/tseeley";
-
   home-manager.users.tseeley.imports = [
     ../../home/dev.nix
+    ../../home/ssh.nix
+    ../../home/scripts.nix
+    ../../home/neovim
     ../../home/alacritty.nix
     ../../home/ghostty.nix
     ../../home/tmux.nix
   ];
-
   homebrew = {
     enable = true;
     onActivation = {
@@ -61,6 +61,9 @@
       "windsurf"
       "zed"
       "zoom"
+    ];
+    brews = [
+      "terminal-notifier"
     ];
   };
 }

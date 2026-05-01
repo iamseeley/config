@@ -1,8 +1,11 @@
-let theme = import ./theme.nix; in
-{ pkgs, ... }: {
+let
+  theme = import ./theme.nix;
+in
+{ pkgs, ... }:
+{
   programs.tmux = {
     enable = true;
-    prefix = "C-a";
+    prefix = "C-b";
     terminal = "tmux-256color";
     mouse = true;
     baseIndex = 1;

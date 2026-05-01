@@ -30,53 +30,68 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, disko, agenix, ... }@inputs:
-  let
-    mkDarwinSystem = hostname: nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/${hostname}
-        home-manager.darwinModules.home-manager
-        agenix.darwinModules.default
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "bak";
-          home-manager.users.tseeley = import ./home;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
-      ];
-    };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      disko,
+      agenix,
+      ...
+    }@inputs:
+    let
+      mkDarwinSystem =
+        hostname:
+        nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/${hostname}
+            home-manager.darwinModules.home-manager
+            agenix.darwinModules.default
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "bak";
+              home-manager.users.tseeley = import ./home;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+            }
+          ];
+        };
 
-    mkNixosSystem = hostname: system: nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/${hostname}
-        home-manager.nixosModules.home-manager
-        agenix.nixosModules.default
-        disko.nixosModules.disko
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "bak";
-          home-manager.users.tseeley = import ./home;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
-      ];
-    };
-  in
-  {
-    darwinConfigurations = {
-      "work-mac" = mkDarwinSystem "work-mac";
-    };
+      mkNixosSystem =
+        hostname: system:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/${hostname}
+            home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
+            disko.nixosModules.disko
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "bak";
+              home-manager.users.tseeley = import ./home;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+            }
+          ];
+        };
+      forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-linux" ];
+    in
+    {
+      darwinConfigurations = {
+        "work-mac" = mkDarwinSystem "work-mac";
+      };
 
-    nixosConfigurations = {
-      "personal-laptop" = mkNixosSystem "personal-laptop" "x86_64-linux";
-      "server-mail"     = mkNixosSystem "server-mail"     "x86_64-linux";
-      "server-services" = mkNixosSystem "server-services" "x86_64-linux";
-      "llm-box"         = mkNixosSystem "llm-box"         "x86_64-linux";
+      nixosConfigurations = {
+        "personal-laptop" = mkNixosSystem "personal-laptop" "x86_64-linux";
+        "server-mail" = mkNixosSystem "server-mail" "x86_64-linux";
+        "server-services" = mkNixosSystem "server-services" "x86_64-linux";
+      };
+
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
     };
-  };
 }

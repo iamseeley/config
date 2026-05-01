@@ -1,7 +1,8 @@
 let theme = import ./theme.nix; in
-{ ... }: {
+{ pkgs, ... }: {
   programs.alacritty = {
     enable = true;
+    package = if pkgs.stdenv.isDarwin then null else pkgs.alacritty;
     settings = {
       window = {
         padding = { x = 8; y = 8; };
