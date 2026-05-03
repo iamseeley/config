@@ -5,7 +5,7 @@ let
   #   ssh-keyscan SERVER_IP | grep ed25519
   # then run `agenix --rekey` from the repo root.
   server-mail = null;
-  server-services = null;
+  server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3DyhftfWvvkAll65DWt1XPFqNI8Mlta/nQoiciFq8L";
 
   keys = builtins.filter (k: k != null);
 in
