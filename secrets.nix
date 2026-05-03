@@ -6,6 +6,7 @@ let
   # then run `agenix --rekey` from the repo root.
   server-mail = null;
   server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3DyhftfWvvkAll65DWt1XPFqNI8Mlta/nQoiciFq8L";
+  server-media = null;
 
   keys = builtins.filter (k: k != null);
 in
@@ -18,4 +19,7 @@ in
   "secrets/umami-db-password.age".publicKeys    = keys [ tseeley server-services ];
   "secrets/miniflux-admin.age".publicKeys       = keys [ tseeley server-services ];
   "secrets/miniflux-db-password.age".publicKeys = keys [ tseeley server-services ];
+  "secrets/tailscale-authkey.age".publicKeys    = keys [ tseeley server-media ];
+  "secrets/restic-password.age".publicKeys      = keys [ tseeley server-media ];
+  "secrets/restic-env.age".publicKeys           = keys [ tseeley server-media ];
 }

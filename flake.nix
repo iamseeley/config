@@ -90,6 +90,7 @@
         "personal-laptop" = mkNixosSystem "personal-laptop" "x86_64-linux";
         "server-mail" = mkNixosSystem "server-mail" "x86_64-linux";
         "server-services" = mkNixosSystem "server-services" "x86_64-linux";
+        "server-media" = mkNixosSystem "server-media" "x86_64-linux";
       };
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
