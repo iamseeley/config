@@ -5,9 +5,9 @@
 
   boot.loader.grub = {
     enable = true;
+    device = "/dev/sda";
     efiSupport = true;
     efiInstallAsRemovable = true;
-    device = "nodev";
   };
 
   system.autoUpgrade = {
@@ -18,7 +18,7 @@
   networking.useDHCP = false;
   systemd.network.enable = true;
   systemd.network.networks."10-wan" = {
-    matchConfig.Name = "ens3";
+    matchConfig.Name = [ "en*" "eth*" ];
     networkConfig.DHCP = "ipv4";
   };
 }
