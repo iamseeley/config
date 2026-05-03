@@ -1,5 +1,8 @@
 # Server-media deploy checklist
 
+> The internal SSDs on this MacBook are inaccessible (T2 lockout / hardware
+> issue). Installing to external USB drive instead. Single-disk install.
+
 ## Pre-deploy (do once)
 
 1. Sign up for Tailscale (https://tailscale.com), generate a reusable auth key
@@ -8,34 +11,22 @@
    - Ephemeral: no
    - Tags: tag:server (create the tag first if needed)
 
-2. On the target MacBook (booted into the live installer terminal), get the
-   disk identifiers:
-   ```
-   lsblk -d -o NAME,SIZE,MODEL,TRAN
-   ls -la /dev/disk/by-id/
-   ```
-   Note the by-id path for the internal SSD and external drive.
-
-3. Fill in placeholders:
-   - `hosts/server-media/disk-config.nix`: REPLACE_ME_INTERNAL,
-     REPLACE_ME_EXTERNAL with the by-id paths from step 2.
-
-4. Generate the SSH host key for the new server:
+2. Generate the SSH host key for the new server:
    ```
    ssh-keygen -t ed25519 -f /tmp/server-media-hostkey -N ""
    ```
 
-5. Update `secrets.nix`: replace `media-server = null` with the contents of
+3. Update `secrets.nix`: replace `media-server = null` with the contents of
    `/tmp/server-media-hostkey.pub` (just the key portion, no comment).
 
-6. Encrypt the Tailscale auth key:
+4. Encrypt the Tailscale auth key:
    ```
    cd ~/config
    nix run github:ryantm/agenix -- -e secrets/tailscale-authkey.age
    ```
    (Editor opens. Paste the auth key from step 1. Save. Exit.)
 
-7. Set up extra-files for the host key:
+5. Set up extra-files for the host key:
    ```
    mkdir -p /tmp/server-media-extra-files/etc/ssh
    cp /tmp/server-media-hostkey \
@@ -45,19 +36,40 @@
    chmod 600 /tmp/server-media-extra-files/etc/ssh/ssh_host_ed25519_key
    ```
 
-8. On the target MacBook, set up SSH access:
+6. On the target MacBook, set up SSH access:
    - Add my laptop's pubkey to `~/.ssh/authorized_keys`, OR
    - Set a password: `sudo passwd nixos`
    - Get its IP: `ip addr` → note the LAN address
 
-9. Verify SSH works from laptop: `ssh nixos@<mbp-ip>` (or `root@<mbp-ip>` if
+7. Verify SSH works from laptop: `ssh nixos@<mbp-ip>` (or `root@<mbp-ip>` if
    running as root in the installer).
 
-10. Commit the placeholder fixes:
-    ```
-    git add -A
-    git commit -m "fill in server-media disk paths and host key"
-    ```
+8. Commit the host key change:
+   ```
+   git add -A
+   git commit -m "add server-media host key"
+   ```
+
+## ⚠️ BEFORE DEPLOYING
+
+The deploy will WIPE the external drive at:
+`/dev/disk/by-id/usb-OWC_On-The-Go_Pro_002932004735-0:0`
+
+This is a 1TB Toshiba HDD in an OWC USB enclosure. If there's
+anything on it you want to keep, back it up FIRST. The drive
+currently has partitions (sdb1, sdb2) — verify their contents
+before proceeding.
+
+To check on the target MacBook:
+```bash
+sudo mkdir -p /mnt/check
+sudo mount /dev/sdb1 /mnt/check 2>/dev/null && ls /mnt/check
+sudo umount /mnt/check 2>/dev/null
+sudo mount /dev/sdb2 /mnt/check 2>/dev/null && ls /mnt/check
+sudo umount /mnt/check 2>/dev/null
+```
+
+If those show files you care about, stop and back them up.
 
 ## Deploy
 
