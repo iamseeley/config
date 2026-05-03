@@ -35,8 +35,9 @@
   services.bazarr  = { enable = true; group = "media"; };
   services.sabnzbd = { enable = true; group = "media"; };
 
-  # unpackerr: no upstream NixOS module in nixos-unstable yet.
-  # Add a manual systemd unit post-boot once Sonarr/Radarr API keys exist.
+  # Unpackerr: upstream NixOS module is still in PR (#509954).
+  # Add `services.unpackerr.enable = true;` once that lands.
+  # Not critical — SABnzbd handles most archive extraction internally.
 
   # recyclarr's full config (Sonarr/Radarr API keys, profile selections)
   # gets added in a follow-up after first boot.
@@ -49,8 +50,11 @@
   users.users.sabnzbd.extraGroups  = [ "media" ];
 
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
-  age.secrets.restic-password.file   = ../../secrets/restic-password.age;
-  age.secrets.restic-env.file        = ../../secrets/restic-env.age;
+
+  # TODO: Re-enable after Hetzner Storage Box is provisioned and
+  # restic-password.age + restic-env.age secrets exist.
+  # age.secrets.restic-password.file = ../../secrets/restic-password.age;
+  # age.secrets.restic-env.file      = ../../secrets/restic-env.age;
 
   services.tailscale = {
     enable = true;
@@ -67,26 +71,27 @@
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  # Restic repo TBD. Hetzner Storage Box format:
-  #   sftp:u<id>@u<id>.your-storagebox.de:/server-media
-  services.restic.backups.state = {
-    paths = [
-      "/var/lib/sonarr"
-      "/var/lib/radarr"
-      "/var/lib/prowlarr"
-      "/var/lib/bazarr"
-      "/var/lib/jellyseerr"
-      "/var/lib/sabnzbd"
-      "/var/lib/jellyfin"
-    ];
-    passwordFile    = config.age.secrets.restic-password.path;
-    environmentFile = config.age.secrets.restic-env.path;
-    repository      = "REPLACE_ME_RESTIC_REPO";
-    timerConfig.OnCalendar = "daily";
-    pruneOpts = [
-      "--keep-daily 7"
-      "--keep-weekly 4"
-      "--keep-monthly 6"
-    ];
-  };
+  # TODO: Re-enable after Hetzner Storage Box is provisioned and
+  # restic-password.age + restic-env.age secrets exist.
+  # Hetzner Storage Box format: sftp:u<id>@u<id>.your-storagebox.de:/server-media
+  # services.restic.backups.state = {
+  #   paths = [
+  #     "/var/lib/sonarr"
+  #     "/var/lib/radarr"
+  #     "/var/lib/prowlarr"
+  #     "/var/lib/bazarr"
+  #     "/var/lib/jellyseerr"
+  #     "/var/lib/sabnzbd"
+  #     "/var/lib/jellyfin"
+  #   ];
+  #   passwordFile    = config.age.secrets.restic-password.path;
+  #   environmentFile = config.age.secrets.restic-env.path;
+  #   repository      = "REPLACE_ME_RESTIC_REPO";
+  #   timerConfig.OnCalendar = "daily";
+  #   pruneOpts = [
+  #     "--keep-daily 7"
+  #     "--keep-weekly 4"
+  #     "--keep-monthly 6"
+  #   ];
+  # };
 }
