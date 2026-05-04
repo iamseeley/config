@@ -7,12 +7,17 @@
   ];
 
   networking.hostName = "server-media";
-  networking.useDHCP = true;
+  networking.networkmanager.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs.config.allowUnfree = true;
+
+  users.users.tseeley = {
+    extraGroups = [ "networkmanager" ];
+    initialHashedPassword = "$6$gNYfOkd1NbzTmNsS$EK7.21b8q66oq.2iIyTX8V.DpWMqJE9rjMpdu7USyoGWOrKTR06lH76NwpTHlwGrUCNvFhjRHJu9h8DxI57l2/";
+  };
 
   system.stateVersion = "24.11";
 }
