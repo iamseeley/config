@@ -12,7 +12,6 @@
     "d /data/media/downloads/tv           2775 root   media -"
     "d /data/media/downloads/movies       2775 root   media -"
     "d /data/media/downloads/incomplete   2775 root   media -"
-    "f /var/lib/sabnzbd/sabnzbd.ini       0640 sabnzbd media -"
   ];
 
   hardware.graphics = {
@@ -44,10 +43,11 @@
     enable = true;
     group = "media";
   };
-  services.sabnzbd = {
+  services.qbittorrent = {
     enable = true;
     group = "media";
-    settings.misc.host = "0.0.0.0";
+    openFirewall = false;
+    webuiPort = 8083;
   };
 
   # Unpackerr: upstream NixOS module is still in PR (#509954).
@@ -65,7 +65,7 @@
   users.users.sonarr.extraGroups = [ "media" ];
   users.users.radarr.extraGroups = [ "media" ];
   users.users.bazarr.extraGroups = [ "media" ];
-  users.users.sabnzbd.extraGroups = [ "media" ];
+  users.users.qbittorrent.extraGroups = [ "media" ];
 
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
@@ -102,7 +102,7 @@
     5055   # jellyseerr
     6767   # bazarr
     7878   # radarr
-    8080   # sabnzbd
+    8083   # qbittorrent
     8096   # jellyfin
     8989   # sonarr
     9696   # prowlarr
