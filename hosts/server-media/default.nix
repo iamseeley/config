@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./media-stack.nix
+    ./vpn-namespace.nix
     ../../modules/nixos/base.nix
   ];
 
