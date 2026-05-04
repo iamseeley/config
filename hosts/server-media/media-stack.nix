@@ -88,6 +88,25 @@
     authKeyFile = config.age.secrets.tailscale-authkey.path;
   };
 
+  # Cloudflare Tunnel — outbound-only connection to Cloudflare's edge.
+  # Public hostnames + ingress rules are configured in the CF dashboard
+  # (this is a dashboard-managed tunnel using a token).
+  age.secrets.cloudflared-token.file = ../../secrets/cloudflared-token.age;
+  systemd.services.cloudflared = {
+    description = "Cloudflare Tunnel";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      EnvironmentFile = config.age.secrets.cloudflared-token.path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token \${TUNNEL_TOKEN}";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      DynamicUser = true;
+    };
+  };
+
   services.caddy = {
     enable = true;
     # configFile set directly to bypass NixOS module's `Caddyfile-formatted`

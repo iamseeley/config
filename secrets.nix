@@ -21,6 +21,7 @@ in
   "secrets/miniflux-db-password.age".publicKeys = keys [ tseeley server-services ];
   "secrets/tailscale-authkey.age".publicKeys    = keys [ tseeley server-media ];
   "secrets/mullvad-wg.conf.age".publicKeys      = keys [ tseeley server-media ];
+  "secrets/cloudflared-token.age".publicKeys    = keys [ tseeley server-media ];
   "secrets/restic-password.age".publicKeys      = keys [ tseeley server-media ];
   "secrets/restic-env.age".publicKeys           = keys [ tseeley server-media ];
 }
