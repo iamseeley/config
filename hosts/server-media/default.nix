@@ -19,5 +19,12 @@
     initialHashedPassword = "$6$gNYfOkd1NbzTmNsS$EK7.21b8q66oq.2iIyTX8V.DpWMqJE9rjMpdu7USyoGWOrKTR06lH76NwpTHlwGrUCNvFhjRHJu9h8DxI57l2/";
   };
 
+  # Keep the MacBook running with the lid closed (used as a server).
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
+    lidSwitchDocked = "ignore";
+  };
+
   system.stateVersion = "24.11";
 }

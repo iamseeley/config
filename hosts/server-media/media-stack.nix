@@ -11,6 +11,9 @@
     "d /data/media/downloads/tv           2775 root   media -"
     "d /data/media/downloads/movies       2775 root   media -"
     "d /data/media/downloads/incomplete   2775 root   media -"
+    # Sabnzbd's pre-start refuses to start if its ini doesn't exist;
+    # touch an empty file on first boot so it can populate it.
+    "f /var/lib/sabnzbd/sabnzbd.ini       0640 sabnzbd media -"
   ];
 
   hardware.graphics = {
