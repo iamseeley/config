@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   users.groups.media = { };
 
   systemd.tmpfiles.rules = [
@@ -11,8 +12,6 @@
     "d /data/media/downloads/tv           2775 root   media -"
     "d /data/media/downloads/movies       2775 root   media -"
     "d /data/media/downloads/incomplete   2775 root   media -"
-    # Sabnzbd's pre-start refuses to start if its ini doesn't exist;
-    # touch an empty file on first boot so it can populate it.
     "f /var/lib/sabnzbd/sabnzbd.ini       0640 sabnzbd media -"
   ];
 
@@ -33,24 +32,40 @@
   };
   services.jellyseerr.enable = true;
   services.prowlarr.enable = true;
-  services.sonarr  = { enable = true; group = "media"; };
-  services.radarr  = { enable = true; group = "media"; };
-  services.bazarr  = { enable = true; group = "media"; };
-  services.sabnzbd = { enable = true; group = "media"; };
+  services.sonarr = {
+    enable = true;
+    group = "media";
+  };
+  services.radarr = {
+    enable = true;
+    group = "media";
+  };
+  services.bazarr = {
+    enable = true;
+    group = "media";
+  };
+  services.sabnzbd = {
+    enable = true;
+    group = "media";
+    settings.misc.host = "0.0.0.0";
+  };
 
   # Unpackerr: upstream NixOS module is still in PR (#509954).
   # Add `services.unpackerr.enable = true;` once that lands.
-  # Not critical — SABnzbd handles most archive extraction internally.
 
   # recyclarr's full config (Sonarr/Radarr API keys, profile selections)
   # gets added in a follow-up after first boot.
   services.recyclarr.enable = true;
 
-  users.users.jellyfin.extraGroups = [ "media" "render" "video" ];
-  users.users.sonarr.extraGroups   = [ "media" ];
-  users.users.radarr.extraGroups   = [ "media" ];
-  users.users.bazarr.extraGroups   = [ "media" ];
-  users.users.sabnzbd.extraGroups  = [ "media" ];
+  users.users.jellyfin.extraGroups = [
+    "media"
+    "render"
+    "video"
+  ];
+  users.users.sonarr.extraGroups = [ "media" ];
+  users.users.radarr.extraGroups = [ "media" ];
+  users.users.bazarr.extraGroups = [ "media" ];
+  users.users.sabnzbd.extraGroups = [ "media" ];
 
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
@@ -79,7 +94,19 @@
     '';
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    # Direct LAN access for the *arr / jellyfin web UIs until Caddy/DNS is
+    # fully wired. Safe on a trusted LAN.
+    5055   # jellyseerr
+    6767   # bazarr
+    7878   # radarr
+    8080   # sabnzbd
+    8096   # jellyfin
+    8989   # sonarr
+    9696   # prowlarr
+  ];
 
   # TODO: Re-enable after Hetzner Storage Box is provisioned and
   # restic-password.age + restic-env.age secrets exist.
