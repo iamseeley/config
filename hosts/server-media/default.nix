@@ -20,7 +20,7 @@
     initialHashedPassword = "$6$gNYfOkd1NbzTmNsS$EK7.21b8q66oq.2iIyTX8V.DpWMqJE9rjMpdu7USyoGWOrKTR06lH76NwpTHlwGrUCNvFhjRHJu9h8DxI57l2/";
   };
 
-  # Keep the MacBook running with the lid closed (used as a server).
+  # MacBook used headless — don't suspend on lid close.
   services.logind = {
     lidSwitch = "ignore";
     lidSwitchExternalPower = "ignore";

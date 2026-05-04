@@ -3,7 +3,6 @@
 {
   disko.devices.disk.main = {
     type = "disk";
-    # LaCie Rugged USB-C 1TB HDD (single-disk install).
     device = "/dev/disk/by-id/usb-LaCie_Rugged_USB-C_0000NT159P7X-0:0";
     content = {
       type = "gpt";

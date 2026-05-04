@@ -49,12 +49,6 @@
     openFirewall = false;
     webuiPort = 8083;
   };
-
-  # Unpackerr: upstream NixOS module is still in PR (#509954).
-  # Add `services.unpackerr.enable = true;` once that lands.
-
-  # recyclarr's full config (Sonarr/Radarr API keys, profile selections)
-  # gets added in a follow-up after first boot.
   services.recyclarr.enable = true;
 
   users.users.jellyfin.extraGroups = [
@@ -67,10 +61,8 @@
   users.users.bazarr.extraGroups = [ "media" ];
   users.users.qbittorrent.extraGroups = [ "media" ];
 
-  # Make sure the *arrs and qBittorrent create files+dirs with group-write
-  # so Bazarr (and anything else in the media group) can drop sidecar files
-  # alongside imported media. The upstream NixOS modules pin UMask=0022,
-  # so override with mkForce.
+  # Upstream NixOS modules pin UMask=0022; override so Bazarr (in the media
+  # group) can drop sidecar subtitle files into directories the *arrs create.
   systemd.services.sonarr.serviceConfig.UMask = lib.mkForce "0002";
   systemd.services.radarr.serviceConfig.UMask = lib.mkForce "0002";
   systemd.services.bazarr.serviceConfig.UMask = lib.mkForce "0002";
@@ -78,55 +70,14 @@
 
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
-  # TODO: Re-enable after Hetzner Storage Box is provisioned and
-  # restic-password.age + restic-env.age secrets exist.
-  # age.secrets.restic-password.file = ../../secrets/restic-password.age;
-  # age.secrets.restic-env.file      = ../../secrets/restic-env.age;
-
   services.tailscale = {
     enable = true;
     authKeyFile = config.age.secrets.tailscale-authkey.path;
   };
 
-  # Cloudflare Tunnel — outbound-only connection to Cloudflare's edge.
-  # Public hostnames + ingress rules are configured in the CF dashboard
-  # (this is a dashboard-managed tunnel using a token).
-  age.secrets.cloudflared-token.file = ../../secrets/cloudflared-token.age;
-  systemd.services.cloudflared = {
-    description = "Cloudflare Tunnel";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "simple";
-      EnvironmentFile = config.age.secrets.cloudflared-token.path;
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared --no-autoupdate tunnel run --token \${TUNNEL_TOKEN}";
-      Restart = "on-failure";
-      RestartSec = "5s";
-      DynamicUser = true;
-    };
-  };
-
-  services.caddy = {
-    enable = true;
-    # configFile set directly to bypass NixOS module's `Caddyfile-formatted`
-    # derivation, which fails to build inside Determinate's linux-builder VM
-    # (cp permission error on chmod). Re-evaluate after upstream fix.
-    configFile = pkgs.writeText "Caddyfile" ''
-      jellyfin.seeley.me {
-        reverse_proxy localhost:8096
-      }
-      request.seeley.me {
-        reverse_proxy localhost:5055
-      }
-    '';
-  };
-
+  # LAN access for the *arr / Jellyfin web UIs. Public access happens via
+  # Tailscale through Caddy on server-services (no ports 80/443 here).
   networking.firewall.allowedTCPPorts = [
-    80
-    443
-    # Direct LAN access for the *arr / jellyfin web UIs until Caddy/DNS is
-    # fully wired. Safe on a trusted LAN.
     5055   # jellyseerr
     6767   # bazarr
     7878   # radarr
@@ -135,28 +86,4 @@
     8989   # sonarr
     9696   # prowlarr
   ];
-
-  # TODO: Re-enable after Hetzner Storage Box is provisioned and
-  # restic-password.age + restic-env.age secrets exist.
-  # Hetzner Storage Box format: sftp:u<id>@u<id>.your-storagebox.de:/server-media
-  # services.restic.backups.state = {
-  #   paths = [
-  #     "/var/lib/sonarr"
-  #     "/var/lib/radarr"
-  #     "/var/lib/prowlarr"
-  #     "/var/lib/bazarr"
-  #     "/var/lib/jellyseerr"
-  #     "/var/lib/sabnzbd"
-  #     "/var/lib/jellyfin"
-  #   ];
-  #   passwordFile    = config.age.secrets.restic-password.path;
-  #   environmentFile = config.age.secrets.restic-env.path;
-  #   repository      = "REPLACE_ME_RESTIC_REPO";
-  #   timerConfig.OnCalendar = "daily";
-  #   pruneOpts = [
-  #     "--keep-daily 7"
-  #     "--keep-weekly 4"
-  #     "--keep-monthly 6"
-  #   ];
-  # };
 }
