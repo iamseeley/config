@@ -1,12 +1,10 @@
-# Single-disk install on external 1TB LaCie SSD via USB.
+# Single-disk install on external 1TB LaCie Rugged USB-C HDD.
 # Internal SSDs on the target MacBook are inaccessible (T2 lockout / hw issue).
 {
   disko.devices.disk.main = {
     type = "disk";
-    # LaCie 1TB SSD via USB.
-    # TODO: replace with the actual /dev/disk/by-id/usb-LaCie_... path
-    # from `ls -la /dev/disk/by-id/` on the target with the LaCie plugged in.
-    device = "REPLACE_ME_LACIE";
+    # LaCie Rugged USB-C 1TB HDD (single-disk install).
+    device = "/dev/disk/by-id/usb-LaCie_Rugged_USB-C_0000NT159P7X-0:0";
     content = {
       type = "gpt";
       partitions = {
