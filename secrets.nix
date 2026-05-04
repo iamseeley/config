@@ -6,7 +6,7 @@ let
   # then run `agenix --rekey` from the repo root.
   server-mail = null;
   server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3DyhftfWvvkAll65DWt1XPFqNI8Mlta/nQoiciFq8L";
-  server-media = null;
+  server-media = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEetXXfIU5Yjqw9tSOvrqvMcFVvYaK1QP2aSmAO1uiUd";
 
   keys = builtins.filter (k: k != null);
 in
