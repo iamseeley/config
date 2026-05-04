@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   users.groups.media = { };
 
@@ -66,6 +66,15 @@
   users.users.radarr.extraGroups = [ "media" ];
   users.users.bazarr.extraGroups = [ "media" ];
   users.users.qbittorrent.extraGroups = [ "media" ];
+
+  # Make sure the *arrs and qBittorrent create files+dirs with group-write
+  # so Bazarr (and anything else in the media group) can drop sidecar files
+  # alongside imported media. The upstream NixOS modules pin UMask=0022,
+  # so override with mkForce.
+  systemd.services.sonarr.serviceConfig.UMask = lib.mkForce "0002";
+  systemd.services.radarr.serviceConfig.UMask = lib.mkForce "0002";
+  systemd.services.bazarr.serviceConfig.UMask = lib.mkForce "0002";
+  systemd.services.qbittorrent.serviceConfig.UMask = lib.mkForce "0002";
 
   age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
