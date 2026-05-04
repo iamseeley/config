@@ -26,5 +26,4 @@ nix run github:nix-community/nixos-anywhere -- \
   --generate-hardware-config nixos-generate-config \
     ./hosts/server-media/hardware-configuration.nix \
   --extra-files "$EXTRA_FILES" \
-  --build-on-remote \
   root@"$TARGET"
