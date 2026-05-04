@@ -63,10 +63,17 @@
 
   services.caddy = {
     enable = true;
-    virtualHosts = {
-      "jellyfin.seeley.me".extraConfig = "reverse_proxy localhost:8096";
-      "request.seeley.me".extraConfig  = "reverse_proxy localhost:5055";
-    };
+    # configFile set directly to bypass NixOS module's `Caddyfile-formatted`
+    # derivation, which fails to build inside Determinate's linux-builder VM
+    # (cp permission error on chmod). Re-evaluate after upstream fix.
+    configFile = pkgs.writeText "Caddyfile" ''
+      jellyfin.seeley.me {
+        reverse_proxy localhost:8096
+      }
+      request.seeley.me {
+        reverse_proxy localhost:5055
+      }
+    '';
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
