@@ -8,7 +8,7 @@
     htop
     curl
     claude-code
-    codex
+#     codex
     lnav
     doctl
   ]) ++ [
