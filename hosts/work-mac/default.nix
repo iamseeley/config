@@ -11,7 +11,10 @@
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;
 
-  users.users.tseeley.home = "/Users/tseeley";
+  users.users.tseeley.home = {
+    home = "/Users/tseeley";
+    shell = pkgs.fish;
+  };
   home-manager.users.tseeley.imports = [
     ../../home/dev.nix
     ../../home/ssh.nix
