@@ -1,5 +1,4 @@
 # Single-disk install on external 1TB LaCie Rugged USB-C HDD.
-# Internal SSDs on the target MacBook are inaccessible (T2 lockout / hw issue).
 {
   disko.devices.disk.main = {
     type = "disk";
@@ -21,7 +20,10 @@
           content = {
             type = "filesystem";
             format = "ext4";
-            extraArgs = [ "-L" "media" ];
+            extraArgs = [
+              "-L"
+              "media"
+            ];
             mountpoint = "/";
           };
         };

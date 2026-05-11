@@ -5,7 +5,7 @@ let
   #   ssh-keyscan SERVER_IP | grep ed25519
   # then run `agenix --rekey` from the repo root.
   server-mail = null;
-  server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3DyhftfWvvkAll65DWt1XPFqNI8Mlta/nQoiciFq8L";
+  server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE2MDNj8XBzhpiGvpwJpisdnmnK+nFxqcpct120UnB1k";
   server-media = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEetXXfIU5Yjqw9tSOvrqvMcFVvYaK1QP2aSmAO1uiUd";
 
   keys = builtins.filter (k: k != null);
@@ -19,7 +19,8 @@ in
   "secrets/umami-db-password.age".publicKeys    = keys [ tseeley server-services ];
   "secrets/miniflux-admin.age".publicKeys       = keys [ tseeley server-services ];
   "secrets/miniflux-db-password.age".publicKeys = keys [ tseeley server-services ];
-  "secrets/tailscale-authkey.age".publicKeys    = keys [ tseeley server-media ];
+  "secrets/tailscale-authkey.age".publicKeys           = keys [ tseeley server-media ];
+  "secrets/tailscale-authkey-services.age".publicKeys  = keys [ tseeley server-services ];
   "secrets/mullvad-wg.conf.age".publicKeys      = keys [ tseeley server-media ];
   "secrets/restic-password.age".publicKeys      = keys [ tseeley server-media ];
   "secrets/restic-env.age".publicKeys           = keys [ tseeley server-media ];

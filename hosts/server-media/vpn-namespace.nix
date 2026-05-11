@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   ns = "vpn";
   wgIf = "wg-vpn";
@@ -19,7 +24,6 @@ in
     mode = "0400";
   };
 
-  # 1. Create the network namespace.
   systemd.services."netns-${ns}" = {
     description = "Network namespace ${ns}";
     before = [ "network.target" ];
@@ -32,17 +36,21 @@ in
     };
   };
 
-  # DNS for processes inside the namespace.
   environment.etc."netns/${ns}/resolv.conf".text = "nameserver ${vpnDNS}\n";
 
-  # 2. Bring up the WireGuard interface inside the namespace.
   systemd.services."wg-${ns}" = {
     description = "WireGuard tunnel inside ${ns} namespace";
     bindsTo = [ "netns-${ns}.service" ];
     requires = [ "network-online.target" ];
-    after = [ "network-online.target" "netns-${ns}.service" ];
+    after = [
+      "network-online.target"
+      "netns-${ns}.service"
+    ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.iproute2 pkgs.wireguard-tools ];
+    path = [
+      pkgs.iproute2
+      pkgs.wireguard-tools
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -61,7 +69,6 @@ in
     '';
   };
 
-  # 3. Veth pair so the host LAN can reach qBittorrent's web UI inside the netns.
   systemd.services."veth-${ns}" = {
     description = "veth pair between host and ${ns} namespace";
     bindsTo = [ "netns-${ns}.service" ];
@@ -85,11 +92,16 @@ in
     '';
   };
 
-  # 4. Forward host LAN :8083 to namespace's qBittorrent.
   systemd.services."qbit-webui-bridge" = {
     description = "Forward host:${toString qbitPort} to ${ns}:${toString qbitPort}";
-    requires = [ "veth-${ns}.service" "qbittorrent.service" ];
-    after = [ "veth-${ns}.service" "qbittorrent.service" ];
+    requires = [
+      "veth-${ns}.service"
+      "qbittorrent.service"
+    ];
+    after = [
+      "veth-${ns}.service"
+      "qbittorrent.service"
+    ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:${toString qbitPort},fork,reuseaddr,bind=0.0.0.0 TCP:${nsVethAddr}:${toString qbitPort}";
@@ -97,13 +109,17 @@ in
     };
   };
 
-  # 5. Run qBittorrent inside the namespace.
   systemd.services.qbittorrent = {
-    requires = [ "wg-${ns}.service" "veth-${ns}.service" ];
-    after = [ "wg-${ns}.service" "veth-${ns}.service" ];
+    requires = [
+      "wg-${ns}.service"
+      "veth-${ns}.service"
+    ];
+    after = [
+      "wg-${ns}.service"
+      "veth-${ns}.service"
+    ];
     serviceConfig = {
       NetworkNamespacePath = "/var/run/netns/${ns}";
-      # qBittorrent's webUI must bind to the veth IP so the host bridge can reach it.
       BindReadOnlyPaths = [ "/etc/netns/${ns}/resolv.conf:/etc/resolv.conf" ];
     };
   };

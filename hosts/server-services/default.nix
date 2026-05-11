@@ -13,6 +13,14 @@
 
   networking.hostName = "server-services";
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey-services.age;
+
+  services.tailscale = {
+    enable = true;
+    authKeyFile = config.age.secrets.tailscale-authkey.path;
+  };
 
   system.stateVersion = "24.11";
 }
