@@ -11,7 +11,7 @@
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;
 
-  users.users.tseeley.home = {
+  users.users.tseeley = {
     home = "/Users/tseeley";
     shell = pkgs.fish;
   };
