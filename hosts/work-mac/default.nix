@@ -15,7 +15,6 @@
   home-manager.users.tseeley.imports = [
     ../../home/dev.nix
     ../../home/ssh.nix
-    ../../home/scripts.nix
     ../../home/neovim
     ../../home/alacritty.nix
     ../../home/ghostty.nix
