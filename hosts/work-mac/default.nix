@@ -7,6 +7,11 @@
   networking.hostName = "work-mac";
   system.stateVersion = 5;
   system.primaryUser = "tseeley";
+
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "tseeley" ];
+  };
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;
 
