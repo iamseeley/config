@@ -7,7 +7,6 @@
   networking.hostName = "work-mac";
   system.stateVersion = 5;
   system.primaryUser = "tseeley";
-  nix.enable = false;
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;
 
