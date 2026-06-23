@@ -1,4 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
+  services.stalwart.stateVersion = lib.mkDefault "26.05";
+
   services.stalwart-mail = {
     enable = true;
     settings = {

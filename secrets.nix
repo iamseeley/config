@@ -1,7 +1,7 @@
 let
   tseeley = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6eIhu9iBunU+qDWOhzlRl7ysd630O29jR6Zk0125da";
 
-  server-mail = null;
+  server-mail = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHG9nbvtDwrLf/fGjgP91ASaRQpEn/sRXrADSmXyTe98 root@stalwart";
   server-services = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE2MDNj8XBzhpiGvpwJpisdnmnK+nFxqcpct120UnB1k";
   server-media = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEetXXfIU5Yjqw9tSOvrqvMcFVvYaK1QP2aSmAO1uiUd";
 
@@ -49,14 +49,6 @@ in
     server-services
   ];
   "secrets/mullvad-wg.conf.age".publicKeys = keys [
-    tseeley
-    server-media
-  ];
-  "secrets/restic-password.age".publicKeys = keys [
-    tseeley
-    server-media
-  ];
-  "secrets/restic-env.age".publicKeys = keys [
     tseeley
     server-media
   ];

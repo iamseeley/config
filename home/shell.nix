@@ -20,6 +20,10 @@ let theme = import ./theme.nix; in
         if pkgs.stdenv.isDarwin
         then "sudo darwin-rebuild switch --flake ~/config"
         else "sudo nixos-rebuild switch --flake ~/config";
+      rebuild-dry =
+        if pkgs.stdenv.isDarwin
+        then "darwin-rebuild build --flake ~/config"
+        else "nixos-rebuild dry-activate --flake ~/config";
     };
     interactiveShellInit = ''
       fish_add_path --prepend /run/current-system/sw/bin

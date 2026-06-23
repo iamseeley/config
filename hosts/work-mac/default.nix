@@ -9,8 +9,14 @@
   system.primaryUser = "tseeley";
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "tseeley" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "tseeley"
+    ];
   };
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;

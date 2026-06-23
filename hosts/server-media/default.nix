@@ -10,7 +10,7 @@
     ./disk-config.nix
     ./media-stack.nix
     ./vpn-namespace.nix
-    ../../modules/nixos/base.nix
+    ../../profiles/server.nix
   ];
 
   networking.hostName = "server-media";
@@ -20,6 +20,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs.config.allowUnfree = true;
+
+  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
 
   users.users.tseeley = {
     extraGroups = [ "networkmanager" ];
