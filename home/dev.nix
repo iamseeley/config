@@ -13,6 +13,7 @@
       lnav
       doctl
       ripgrep
+      lazygit
     ])
     ++ [
       inputs.agenix.packages.${pkgs.system}.default
