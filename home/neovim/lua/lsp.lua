@@ -46,3 +46,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
   end,
 })
+
+vim.api.nvim_create_user_command('LspRestart', function()
+  for _, c in ipairs(vim.lsp.get_clients()) do c:stop() end
+  vim.defer_fn(function() vim.cmd('edit') end, 500)
+end, {})
