@@ -73,6 +73,7 @@
       "windsurf"
       "zed"
       "zoom"
+      "warp"
     ];
     brews = [
       "terminal-notifier"
