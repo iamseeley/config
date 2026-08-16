@@ -13,6 +13,7 @@ let
     rustfmt
     nixfmt
     zls
+    vscode-langservers-extracted
   ];
 in
 {

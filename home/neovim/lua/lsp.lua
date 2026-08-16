@@ -1,5 +1,7 @@
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 vim.lsp.config['ts_ls'] = {
   cmd = { 'typescript-language-server', '--stdio' },
   filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
@@ -34,7 +36,28 @@ vim.lsp.config['pyright'] = {
   capabilities = capabilities,
 }
 
-vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright', 'zls' })
+vim.lsp.config['html'] = {
+  cmd = { 'vscode-html-language-server', '--stdio' },
+  filetypes = { 'html' },
+  root_markers = { 'package.json', '.git' },
+  capabilities = capabilities,
+}
+
+vim.lsp.config['cssls'] = {
+  cmd = { 'vscode-css-language-server', '--stdio' },
+  filetypes = { 'css', 'scss', 'less' },
+  root_markers = { 'package.json', '.git' },
+  capabilities = capabilities,
+}
+
+vim.lsp.config['jsonls'] = {
+  cmd = { 'vscode-json-language-server', '--stdio' },
+  filetypes = { 'json', 'jsonc' },
+  root_markers = { 'package.json', '.git' },
+  capabilities = capabilities,
+}
+
+vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright', 'zls', 'html', 'cssls', 'jsonls' })
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)

@@ -3,6 +3,7 @@
   imports = [
     ../../modules/darwin/defaults.nix
     ../../modules/darwin/yabai.nix
+    ../../modules/speedlog.nix
   ];
   networking.hostName = "work-mac";
   system.stateVersion = 5;
@@ -74,6 +75,7 @@
       "zed"
       "zoom"
       "warp"
+      "sublime-text"
     ];
     brews = [
       "terminal-notifier"

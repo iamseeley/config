@@ -14,6 +14,8 @@
       doctl
       ripgrep
       lazygit
+      ncdu
+      taskwarrior
     ])
     ++ [
       inputs.agenix.packages.${pkgs.system}.default
