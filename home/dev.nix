@@ -15,7 +15,7 @@
       ripgrep
       lazygit
       ncdu
-      taskwarrior
+      taskwarrior2
     ])
     ++ [
       inputs.agenix.packages.${pkgs.system}.default
