@@ -10,6 +10,7 @@
     ./ghostty.nix
     ./tmux.nix
     ./taskwarrior.nix
+    ./hledger.nix
   ];
 
   home.username = "tseeley";
