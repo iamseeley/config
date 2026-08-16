@@ -33,6 +33,7 @@
     ../../home/alacritty.nix
     ../../home/ghostty.nix
     ../../home/tmux.nix
+    ../../home/taskwarrior.nix
   ];
   homebrew = {
     enable = true;
