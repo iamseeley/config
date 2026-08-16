@@ -3,6 +3,13 @@
   imports = [
     ./shell.nix
     ./git.nix
+    ./dev.nix
+    ./ssh.nix
+    ./neovim
+    ./alacritty.nix
+    ./ghostty.nix
+    ./tmux.nix
+    ./taskwarrior.nix
   ];
 
   home.username = "tseeley";
