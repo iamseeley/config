@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -10,6 +11,11 @@
         extraOptions = {
           UseKeychain = "yes";
         };
+      };
+      "github.com" = {
+        hostname = "ssh.github.com";
+        port = 443;
+        user = "git";
       };
       "mk2" = {
         user = "thomas";
