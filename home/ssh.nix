@@ -12,6 +12,10 @@
           UseKeychain = "yes";
         };
       };
+      "d2" = {
+        user = "membrane";
+        forwardAgent = true;
+      };
       "github.com" = {
         hostname = "ssh.github.com";
         port = 443;
@@ -19,8 +23,6 @@
       };
       "mk2" = {
         user = "thomas";
-        # Forward the Mac's ssh-agent so git on mk2 uses keys unlocked here
-        # instead of prompting for mk2's local key passphrase.
         forwardAgent = true;
       };
       "server-mail" = {
@@ -29,6 +31,10 @@
       };
       "server-services" = {
         hostname = "services.seeley.me";
+        user = "root";
+      };
+      "thinky" = {
+        hostname = "192.168.0.74";
         user = "root";
       };
     };

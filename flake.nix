@@ -79,7 +79,10 @@
             }
           ];
         };
-      forAllSystems = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "x86_64-linux"
+      ];
     in
     {
       darwinConfigurations = {
@@ -90,6 +93,7 @@
         "server-mail" = mkNixosSystem "server-mail" "x86_64-linux";
         "server-services" = mkNixosSystem "server-services" "x86_64-linux";
         "server-media" = mkNixosSystem "server-media" "x86_64-linux";
+        "thinky" = mkNixosSystem "thinky" "x86_64-linux";
       };
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);

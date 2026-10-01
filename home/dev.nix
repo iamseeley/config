@@ -8,7 +8,6 @@
       httpie
       htop
       curl
-      claude-code
       codex
       lnav
       doctl

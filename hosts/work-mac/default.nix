@@ -33,7 +33,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap";
+      cleanup = "none";
     };
     casks = [
       "1password"
@@ -71,6 +71,7 @@
       "zoom"
       "warp"
       "sublime-text"
+      "wacom-tablet"
     ];
     brews = [
       "terminal-notifier"

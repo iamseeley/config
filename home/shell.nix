@@ -1,29 +1,40 @@
-let theme = import ./theme.nix; in
-{ pkgs, ... }: {
+let
+  theme = import ./theme.nix;
+in
+{ pkgs, ... }:
+{
   programs.fish = {
     enable = true;
     shellAliases = {
-      ls  = "eza";
-      ll  = "eza -la";
-      la  = "eza -a";
-      lt  = "eza --tree";
+      ls = "eza";
+      ll = "eza -la";
+      la = "eza -a";
+      lt = "eza --tree";
       cat = "bat";
-      g   = "git";
-      gs  = "git status";
-      gd  = "git diff";
-      gl  = "git log --oneline --graph --decorate";
-      ga  = "git add";
-      gc  = "git commit";
-      gp  = "git push";
-      v   = "nvim";
+      g = "git";
+      gs = "git status";
+      gd = "git diff";
+      gl = "git log --oneline --graph --decorate";
+      ga = "git add";
+      gc = "git commit";
+      gp = "git push";
+      v = "nvim";
       rebuild =
-        if pkgs.stdenv.isDarwin
-        then "sudo darwin-rebuild switch --flake ~/config"
-        else "sudo nixos-rebuild switch --flake ~/config";
+        if pkgs.stdenv.isDarwin then
+          "sudo darwin-rebuild switch --flake ~/config"
+        else
+          "sudo nixos-rebuild switch --flake ~/config";
       rebuild-dry =
-        if pkgs.stdenv.isDarwin
-        then "darwin-rebuild build --flake ~/config"
-        else "nixos-rebuild dry-activate --flake ~/config";
+        if pkgs.stdenv.isDarwin then
+          "darwin-rebuild build --flake ~/config"
+        else
+          "nixos-rebuild dry-activate --flake ~/config";
+    };
+    functions = {
+      deploy = ''
+        nix run nixpkgs#nixos-rebuild -- $argv[2] --flake ~/config#$argv[1] \
+          --target-host $argv[1] --build-host $argv[1]
+      '';
     };
     interactiveShellInit = ''
       fish_add_path --prepend /run/current-system/sw/bin
@@ -64,20 +75,24 @@ let theme = import ./theme.nix; in
     enable = true;
     enableFishIntegration = true;
     defaultCommand = "fd --type f --hidden --follow --exclude .git";
-    defaultOptions = [ "--height 40%" "--layout=reverse" "--border" ];
+    defaultOptions = [
+      "--height 40%"
+      "--layout=reverse"
+      "--border"
+    ];
     colors = {
-      fg      = theme.fg;
-      bg      = theme.bg;
-      hl      = theme.green;
-      "fg+"   = theme.fg-bright;
-      "bg+"   = theme.bg-light;
-      "hl+"   = theme.green;
-      info    = theme.blue-gray;
-      prompt  = theme.green;
+      fg = theme.fg;
+      bg = theme.bg;
+      hl = theme.green;
+      "fg+" = theme.fg-bright;
+      "bg+" = theme.bg-light;
+      "hl+" = theme.green;
+      info = theme.blue-gray;
+      prompt = theme.green;
       pointer = theme.orange;
-      marker  = theme.orange;
+      marker = theme.orange;
       spinner = theme.blue-gray;
-      header  = theme.blue-gray;
+      header = theme.blue-gray;
     };
   };
 
