@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, ... }: {
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./disk-config.nix
@@ -9,11 +15,22 @@
 
   networking.hostName = "server-mail";
 
-  networking.firewall.allowedTCPPorts = [
-    25 80 110 143 443 465 587 993 995 4190 8080
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 2048;
+    }
   ];
 
-  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey.age;
+  networking.firewall.allowedTCPPorts = [
+    25
+    143
+    443
+    465
+    587
+    993
+    4190
+  ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "26.05";
 }
