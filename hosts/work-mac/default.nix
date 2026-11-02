@@ -27,7 +27,7 @@
     shell = pkgs.fish;
   };
   home-manager.users.tseeley.imports = [
-    ../../home/default.nix
+    ../../home/desktop.nix
   ];
   homebrew = {
     enable = true;
@@ -69,12 +69,13 @@
       "windsurf"
       "zed"
       "zoom"
-      "warp"
       "sublime-text"
       "wacom-tablet"
     ];
     brews = [
       "terminal-notifier"
+      "pkgconfig"
+      "openssl@3"
     ];
   };
 }

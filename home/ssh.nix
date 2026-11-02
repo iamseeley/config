@@ -1,14 +1,12 @@
-{ ... }:
+{ lib, pkgs, ... }:
 {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
     matchBlocks = {
       "*" = {
-        # Load keys into the agent on first use and cache passphrases in the
-        # macOS Keychain so they survive reboots.
         addKeysToAgent = "yes";
-        extraOptions = {
+        extraOptions = lib.optionalAttrs pkgs.stdenv.isDarwin {
           UseKeychain = "yes";
         };
       };

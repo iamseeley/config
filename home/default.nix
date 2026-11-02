@@ -6,11 +6,7 @@
     ./dev.nix
     ./ssh.nix
     ./neovim
-    ./alacritty.nix
-    ./ghostty.nix
     ./tmux.nix
-    ./taskwarrior.nix
-    ./hledger.nix
   ];
 
   home.username = "tseeley";

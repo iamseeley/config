@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
@@ -38,7 +39,7 @@
         pf = "push --force-with-lease";
         undo = "reset HEAD~1 --soft";
         unstage = "reset HEAD --";
-        save = "stash save";
+        save = "stash push";
         pop = "stash pop";
         amend = "commit --amend --no-edit";
         aliases = "config --get-regexp alias";
