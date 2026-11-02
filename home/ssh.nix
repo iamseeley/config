@@ -28,7 +28,7 @@
         user = "root";
       };
       "server-services" = {
-        hostname = "services.seeley.me";
+        hostname = "5.161.198.149";
         user = "root";
       };
       "thinky" = {
