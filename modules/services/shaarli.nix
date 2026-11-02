@@ -1,4 +1,7 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
+  virtualisation.docker.enable = true;
+
   systemd.tmpfiles.rules = [
     "d /var/lib/shaarli/data  0777 root root -"
     "d /var/lib/shaarli/cache 0777 root root -"
@@ -6,12 +9,15 @@
 
   systemd.services.shaarli = {
     description = "Shaarli bookmarks";
-    after    = [ "docker.service" "network.target" ];
+    after = [
+      "docker.service"
+      "network.target"
+    ];
     requires = [ "docker.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.docker}/bin/docker compose -f /etc/shaarli/docker-compose.yml up";
-      ExecStop  = "${pkgs.docker}/bin/docker compose -f /etc/shaarli/docker-compose.yml down";
+      ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/shaarli/docker-compose.yml down";
       Restart = "always";
     };
   };

@@ -19,8 +19,6 @@
     443
   ];
 
-  age.secrets.tailscale-authkey.file = ../../secrets/tailscale-authkey-thinkcentre.age;
-
   system.stateVersion = "25.05";
 
   boot.loader.systemd-boot.enable = true;

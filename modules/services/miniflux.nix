@@ -1,15 +1,21 @@
-{ config, pkgs, ... }: {
-  age.secrets.miniflux-admin.file       = ../../secrets/miniflux-admin.age;
+{ config, pkgs, ... }:
+{
+  virtualisation.docker.enable = true;
+
+  age.secrets.miniflux-admin.file = ../../secrets/miniflux-admin.age;
   age.secrets.miniflux-db-password.file = ../../secrets/miniflux-db-password.age;
 
   systemd.services.miniflux = {
     description = "Miniflux feed reader";
-    after    = [ "docker.service" "network.target" ];
+    after = [
+      "docker.service"
+      "network.target"
+    ];
     requires = [ "docker.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.docker}/bin/docker compose -f /etc/miniflux/docker-compose.yml up";
-      ExecStop  = "${pkgs.docker}/bin/docker compose -f /etc/miniflux/docker-compose.yml down";
+      ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/miniflux/docker-compose.yml down";
       Restart = "always";
       EnvironmentFile = [
         config.age.secrets.miniflux-admin.path

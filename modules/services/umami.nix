@@ -1,15 +1,21 @@
-{ config, pkgs, ... }: {
-  age.secrets.umami-app-secret.file   = ../../secrets/umami-app-secret.age;
-  age.secrets.umami-db-password.file  = ../../secrets/umami-db-password.age;
+{ config, pkgs, ... }:
+{
+  virtualisation.docker.enable = true;
+
+  age.secrets.umami-app-secret.file = ../../secrets/umami-app-secret.age;
+  age.secrets.umami-db-password.file = ../../secrets/umami-db-password.age;
 
   systemd.services.umami = {
     description = "Umami analytics";
-    after    = [ "docker.service" "network.target" ];
+    after = [
+      "docker.service"
+      "network.target"
+    ];
     requires = [ "docker.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.docker}/bin/docker compose -f /etc/umami/docker-compose.yml up";
-      ExecStop  = "${pkgs.docker}/bin/docker compose -f /etc/umami/docker-compose.yml down";
+      ExecStop = "${pkgs.docker}/bin/docker compose -f /etc/umami/docker-compose.yml down";
       Restart = "always";
       EnvironmentFile = [
         config.age.secrets.umami-app-secret.path

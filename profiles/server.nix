@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, ... }: {
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ../modules/nixos/base.nix
   ];
@@ -11,15 +17,7 @@
     docker-compose
   ];
 
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = false;
-  };
-
-  services.tailscale = {
-    enable = true;
-    authKeyFile = config.age.secrets.tailscale-authkey.path;
-  };
+  services.tailscale.enable = true;
 
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
 }
