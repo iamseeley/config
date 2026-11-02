@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.neovim = {
     plugins = [
       pkgs.vimPlugins.conform-nvim

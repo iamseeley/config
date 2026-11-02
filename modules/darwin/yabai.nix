@@ -1,16 +1,17 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   services.yabai = {
     enable = true;
     config = {
-      layout             = "bsp";
-      window_gap         = 8;
-      top_padding        = 8;
-      bottom_padding     = 8;
-      left_padding       = 8;
-      right_padding      = 8;
+      layout = "bsp";
+      window_gap = 8;
+      top_padding = 8;
+      bottom_padding = 8;
+      left_padding = 8;
+      right_padding = 8;
       mouse_follows_focus = "off";
       focus_follows_mouse = "off";
-      window_placement   = "second_child";
+      window_placement = "second_child";
     };
     extraConfig = ''
       yabai -m rule --add app="System Preferences" manage=off

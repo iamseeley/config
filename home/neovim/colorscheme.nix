@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.neovim.plugins = [
     {
       plugin = pkgs.vimUtils.buildVimPlugin {
@@ -11,7 +12,7 @@
         };
       };
       type = "lua";
-      config = ''vim.cmd([[colorscheme mustang]])'';
+      config = "vim.cmd([[colorscheme mustang]])";
     }
   ];
 }
