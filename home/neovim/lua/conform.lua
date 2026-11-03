@@ -1,3 +1,9 @@
+-- vim.filetype.add({
+--   pattern = {
+--     [".*/templates/.*%.html"] = "htmldjango",
+--   },
+-- })
+
 require("conform").setup({
   formatters_by_ft = {
     javascript = { "prettierd" },
@@ -6,6 +12,7 @@ require("conform").setup({
     typescriptreact = { "prettierd" },
     css = { "prettierd" },
     html = { "prettierd" },
+    -- htmldjango = { "djlint" },
     json = { "prettierd" },
     markdown = { "prettierd" },
     python = { "black" },
