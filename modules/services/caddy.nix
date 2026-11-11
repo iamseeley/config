@@ -9,14 +9,24 @@
   users.groups.caddy = { };
 
   environment.etc."caddy/Caddyfile".text = ''
-    stats.seeley.me {
-      reverse_proxy localhost:3000
-    }
-    bookmarks.seeley.me {
-      reverse_proxy localhost:8080
-    }
-    feeds.seeley.me {
-      reverse_proxy localhost:8081
+        stats.seeley.me {
+          reverse_proxy localhost:3000
+        }
+        bookmarks.seeley.me {
+          reverse_proxy localhost:8080
+        }
+        feeds.seeley.me {
+          reverse_proxy localhost:8081
+        }
+    tseeley.com {
+      tls internal
+      root * /var/www/tseeley.com
+      encode zstd gzip
+      file_server
+      handle_errors 404 {
+        rewrite * /404.html
+        file_server
+      }
     }
   '';
 
