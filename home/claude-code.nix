@@ -31,10 +31,26 @@ let
     msg=$(printf '%s' "$input" | ${jq} -r '(.message // "Claude finished the turn") | gsub("\""; "'"'"'")')
     /usr/bin/osascript -e "display notification \"$msg\" with title \"Claude: $dir\" subtitle \"$1\" sound name \"Glass\""
   '';
+
+  # ccd (Membrane dashboard daemon) reports session state through these hooks.
+  ccd = [
+    {
+      hooks = [
+        {
+          type = "command";
+          command = "ccd hook";
+          timeout = 5;
+        }
+      ];
+    }
+  ];
 in
 {
   programs.claude-code = {
     enable = true;
+    context = ''
+      - Never override the git author. Commit with the identity in git config.
+    '';
     settings = {
       model = "opus";
       effortLevel = "high";
@@ -66,6 +82,9 @@ in
       };
 
       hooks = {
+        SessionStart = ccd;
+        UserPromptSubmit = ccd;
+        PostToolUse = map (g: g // { matcher = "*"; }) ccd;
         Notification = [
           {
             hooks = [
@@ -75,7 +94,7 @@ in
               }
             ];
           }
-        ];
+        ] ++ ccd;
         Stop = [
           {
             hooks = [
@@ -85,7 +104,8 @@ in
               }
             ];
           }
-        ];
+        ] ++ ccd;
+        SessionEnd = ccd;
       };
     };
   };

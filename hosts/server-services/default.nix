@@ -14,6 +14,7 @@
     ../../modules/services/umami.nix
     ../../modules/services/miniflux.nix
     ../../modules/services/shaarli.nix
+    ../../modules/services/tseeley-site.nix
   ];
 
   networking.hostName = "server-services";
