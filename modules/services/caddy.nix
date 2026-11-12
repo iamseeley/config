@@ -1,65 +1,10 @@
+{ ... }:
 {
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
-{
-  users.users.caddy = {
-    isSystemUser = true;
-    group = "caddy";
-    home = "/var/lib/caddy";
-    createHome = true;
-  };
-  users.groups.caddy = { };
+  # sites are declared by each service module via services.caddy.virtualHosts
+  services.caddy.enable = true;
 
-  environment.etc."caddy/Caddyfile".text = ''
-        stats.seeley.me {
-          reverse_proxy localhost:3000
-        }
-        bookmarks.seeley.me {
-          root * ${pkgs.shaarli}
-          @blocked {
-            path *.php
-            not path /index.php
-          }
-          respond @blocked 404
-          php_fastcgi unix/${config.services.phpfpm.pools.shaarli.socket}
-          file_server
-        }
-        feeds.seeley.me {
-          reverse_proxy localhost:8081
-        }
-        origin.tseeley.com {
-          root * ${inputs.tseeley-site.packages.${pkgs.stdenv.hostPlatform.system}.default}
-          encode zstd gzip
-          header Cache-Control "public, max-age=600, must-revalidate"
-          file_server
-          handle_errors 404 {
-            rewrite * /404.html
-            file_server
-          }
-        }
-  '';
-
-  systemd.services.caddy = {
-    description = "Caddy web server";
-    wantedBy = [ "multi-user.target" ];
-    after = [
-      "network.target"
-      "network-online.target"
-    ];
-    wants = [ "network-online.target" ];
-    reloadTriggers = [ config.environment.etc."caddy/Caddyfile".source ];
-    serviceConfig = {
-      ExecStart = "${pkgs.caddy}/bin/caddy run --config /etc/caddy/Caddyfile";
-      ExecReload = "${pkgs.caddy}/bin/caddy reload --config /etc/caddy/Caddyfile --force";
-      User = "caddy";
-      Group = "caddy";
-      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
-      StateDirectory = "caddy";
-      Restart = "on-failure";
-      RestartSec = "5s";
-    };
-  };
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 }
