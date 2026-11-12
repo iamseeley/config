@@ -2,7 +2,9 @@
   description = "tseeley's system configuration";
 
   inputs = {
+    # the Mac tracks unstable; servers track the current NixOS release
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
@@ -12,6 +14,11 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     disko = {
@@ -32,8 +39,10 @@
     {
       self,
       nixpkgs,
+      nixpkgs-stable,
       nix-darwin,
       home-manager,
+      home-manager-stable,
       disko,
       agenix,
       ...
@@ -64,13 +73,13 @@
 
       mkNixosSystem =
         hostname: system:
-        nixpkgs.lib.nixosSystem {
+        nixpkgs-stable.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
             ./machines/${hostname}
             ./modules/common/nix.nix
-            home-manager.nixosModules.home-manager
+            home-manager-stable.nixosModules.home-manager
             agenix.nixosModules.default
             disko.nixosModules.disko
             homeManager
