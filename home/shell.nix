@@ -30,12 +30,6 @@ in
         else
           "nixos-rebuild dry-activate --flake ~/config";
     };
-    functions = {
-      deploy = ''
-        nix run nixpkgs#nixos-rebuild -- $argv[2] --flake ~/config#$argv[1] \
-          --target-host $argv[1] --build-host $argv[1]
-      '';
-    };
     interactiveShellInit = ''
       fish_add_path --prepend /run/current-system/sw/bin
       fish_add_path --prepend /opt/homebrew/bin

@@ -14,6 +14,7 @@
       ripgrep
       lazygit
       ncdu
+      just
     ])
     ++ [
       inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
