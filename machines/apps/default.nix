@@ -13,5 +13,6 @@
 
   networking.hostName = "apps";
 
+  # the NixOS release this machine was installed with; never bump it
   system.stateVersion = "24.11";
 }

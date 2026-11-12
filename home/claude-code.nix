@@ -94,7 +94,8 @@ in
               }
             ];
           }
-        ] ++ ccd;
+        ]
+        ++ ccd;
         Stop = [
           {
             hooks = [
@@ -104,7 +105,8 @@ in
               }
             ];
           }
-        ] ++ ccd;
+        ]
+        ++ ccd;
         SessionEnd = ccd;
       };
     };

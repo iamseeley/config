@@ -3,20 +3,9 @@ let
   tseeleyKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6eIhu9iBunU+qDWOhzlRl7ysd630O29jR6Zk0125da tseeley@ts.local";
 in
 {
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
+  nix.settings.trusted-users = [ "@wheel" ];
 
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
+  nix.gc.dates = "weekly";
 
   time.timeZone = "America/Chicago";
   i18n.defaultLocale = "en_US.UTF-8";

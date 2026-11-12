@@ -6,19 +6,11 @@
     ../../modules/darwin/speedlog.nix
   ];
   networking.hostName = "work-mac";
+  # set when nix-darwin was first installed; never bump it
   system.stateVersion = 5;
   system.primaryUser = "tseeley";
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      "tseeley"
-    ];
-  };
+  nix.settings.trusted-users = [ "tseeley" ];
   nixpkgs.config.allowUnfree = true;
   programs.fish.enable = true;
 

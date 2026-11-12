@@ -27,5 +27,6 @@
     4190
   ];
 
+  # the NixOS release this machine was installed with; never bump it
   system.stateVersion = "26.05";
 }
