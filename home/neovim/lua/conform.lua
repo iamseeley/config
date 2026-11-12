@@ -23,6 +23,8 @@ require("conform").setup({
     timeout_ms = 500,
     lsp_fallback = true,
   },
+  -- formatters come from home/dev.nix, so they're missing on servers
+  notify_no_formatters = false,
 })
 
 vim.keymap.set("n", "<leader>f", function()

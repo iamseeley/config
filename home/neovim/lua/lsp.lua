@@ -57,7 +57,12 @@ vim.lsp.config['jsonls'] = {
   capabilities = capabilities,
 }
 
-vim.lsp.enable({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright', 'zls', 'html', 'cssls', 'jsonls' })
+-- language servers come from home/dev.nix, so only enable the ones installed here
+for _, name in ipairs({ 'ts_ls', 'rust_analyzer', 'nixd', 'pyright', 'zls', 'html', 'cssls', 'jsonls' }) do
+  if vim.fn.executable(vim.lsp.config[name].cmd[1]) == 1 then
+    vim.lsp.enable(name)
+  end
+end
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)

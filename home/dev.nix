@@ -1,19 +1,35 @@
 { pkgs, inputs, ... }:
+let
+  # language servers and formatters used by home/neovim/lua/{lsp,conform}.lua
+  editorPackages = with pkgs; [
+    typescript-language-server
+    rust-analyzer
+    nixd
+    pyright
+    prettierd
+    black
+    rustfmt
+    nixfmt
+    zls
+    vscode-langservers-extracted
+  ];
+in
 {
+  imports = [ ./ssh.nix ];
+
+  programs.neovim.extraPackages = editorPackages;
+
   home.packages =
-    (with pkgs; [
+    editorPackages
+    ++ (with pkgs; [
       gh
-      jq
       yq
       httpie
-      htop
       curl
       codex
       lnav
       doctl
-      ripgrep
       lazygit
-      ncdu
       just
     ])
     ++ [

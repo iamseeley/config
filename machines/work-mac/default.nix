@@ -27,6 +27,7 @@
     shell = pkgs.fish;
   };
   home-manager.users.tseeley.imports = [
+    ../../home/dev.nix
     ../../home/desktop.nix
   ];
   homebrew = {

@@ -1,21 +1,4 @@
 { pkgs, lib, ... }:
-
-let
-  neovimPackages = with pkgs; [
-    typescript-language-server
-    rust-analyzer
-    nixd
-    pyright
-    ripgrep
-    fd
-    prettierd
-    black
-    rustfmt
-    nixfmt
-    zls
-    vscode-langservers-extracted
-  ];
-in
 {
   imports = [
     ./colorscheme.nix
@@ -38,7 +21,10 @@ in
     withRuby = false;
     withPython3 = false;
 
-    extraPackages = neovimPackages;
+    extraPackages = with pkgs; [
+      ripgrep
+      fd
+    ];
 
     initLua = lib.mkBefore ''
       vim.g.mapleader = ' '
@@ -52,6 +38,4 @@ in
       vim.opt.clipboard = "unnamedplus"
     '';
   };
-
-  home.packages = neovimPackages;
 }
