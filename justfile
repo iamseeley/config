@@ -20,3 +20,8 @@ update:
 # Re-encrypt secrets after changing keys in secrets.nix
 rekey:
     agenix -r
+
+# Publish the latest tseeley.com commit
+site:
+    nix flake update tseeley-site
+    just deploy server-services

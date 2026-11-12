@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   users.users.caddy = {
     isSystemUser = true;
@@ -26,7 +31,7 @@
           reverse_proxy localhost:8081
         }
         origin.tseeley.com {
-          root * /var/www/tseeley.com
+          root * ${inputs.tseeley-site.packages.${pkgs.stdenv.hostPlatform.system}.default}
           encode zstd gzip
           header Cache-Control "public, max-age=600, must-revalidate"
           file_server
