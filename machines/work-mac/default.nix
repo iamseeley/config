@@ -26,7 +26,8 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "none";
+      # removes anything installed with brew that isn't listed here (keeps app data)
+      cleanup = "uninstall";
     };
     casks = [
       "1password"
@@ -34,7 +35,6 @@
       "alacritty"
       "alt-tab"
       "anki"
-      "balenaetcher"
       "cursor"
       "docker-desktop"
       "firefox"
@@ -55,17 +55,18 @@
       "syncthing-app"
       "tailscale-app"
       "thunderbird"
-      "visual-studio-code"
-      "void"
       "zed"
       "zoom"
       "sublime-text"
       "wacom-tablet"
     ];
     brews = [
-      "terminal-notifier"
-      "pkgconfig"
+      "binaryen"
+      "brotli"
       "openssl@3"
+      "pkgconf"
+      "terminal-notifier"
+      "trivy"
     ];
   };
 }
