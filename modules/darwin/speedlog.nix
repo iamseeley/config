@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   csv = "/Users/tseeley/speedtest.csv";

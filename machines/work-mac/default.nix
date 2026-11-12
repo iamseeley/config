@@ -1,9 +1,9 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ../../modules/darwin/defaults.nix
     ../../modules/darwin/yabai.nix
-    ../../modules/speedlog.nix
+    ../../modules/darwin/speedlog.nix
   ];
   networking.hostName = "work-mac";
   system.stateVersion = 5;

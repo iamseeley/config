@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   tseeleyKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6eIhu9iBunU+qDWOhzlRl7ysd630O29jR6Zk0125da tseeley@ts.local";
 in
@@ -38,4 +38,14 @@ in
   };
 
   networking.firewall.enable = true;
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+  services.tailscale.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+    curl
+    htop
+  ];
 }

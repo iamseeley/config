@@ -27,10 +27,6 @@
     # not following nixpkgs: the site pins the zola version it was written for
     tseeley-site.url = "github:iamseeley/tseeley.com";
 
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -50,7 +46,7 @@
           system = "aarch64-darwin";
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/${hostname}
+            ./machines/${hostname}
             home-manager.darwinModules.home-manager
             agenix.darwinModules.default
             {
@@ -69,7 +65,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/${hostname}
+            ./machines/${hostname}
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             disko.nixosModules.disko

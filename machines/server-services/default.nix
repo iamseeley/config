@@ -1,15 +1,10 @@
-{
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ./disk-config.nix
-    ../../profiles/server.nix
-    ../../modules/nixos/headless-grub.nix
+    ../../modules/nixos/server.nix
+    ../../modules/nixos/hetzner.nix
     ../../modules/services/caddy.nix
     ../../modules/services/umami.nix
     ../../modules/services/miniflux.nix

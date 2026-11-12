@@ -1,13 +1,8 @@
-{
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ../../profiles/server.nix
+    ../../modules/nixos/server.nix
     ../../modules/services/caddy.nix
     ../../modules/services/miniflux.nix
     ../../modules/services/shaarli.nix
