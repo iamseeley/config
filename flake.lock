@@ -228,11 +228,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1794499912,
-        "narHash": "sha256-vRV3B+pVJp4eQDy+wQjX6bnmSmwI6e1s2vX7LXWz8oA=",
+        "lastModified": 1794504872,
+        "narHash": "sha256-98FlWd3vHroMiIbS70pYYf86u8qKkqO9VbBmFusnwGU=",
         "owner": "iamseeley",
         "repo": "tseeley.com",
-        "rev": "000af4c91931506d9081987d34e397fd6ed94166",
+        "rev": "90f8d423707f233c26cb06538196cd30ff096e5a",
         "type": "github"
       },
       "original": {
