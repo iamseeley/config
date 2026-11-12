@@ -14,7 +14,6 @@
     git
     curl
     htop
-    docker-compose
   ];
 
   services.tailscale.enable = true;

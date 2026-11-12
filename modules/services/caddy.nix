@@ -13,7 +13,14 @@
           reverse_proxy localhost:3000
         }
         bookmarks.seeley.me {
-          reverse_proxy localhost:8080
+          root * ${pkgs.shaarli}
+          @blocked {
+            path *.php
+            not path /index.php
+          }
+          respond @blocked 404
+          php_fastcgi unix/${config.services.phpfpm.pools.shaarli.socket}
+          file_server
         }
         feeds.seeley.me {
           reverse_proxy localhost:8081
