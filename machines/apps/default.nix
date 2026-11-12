@@ -11,7 +11,7 @@
     ../../modules/services/shaarli.nix
   ];
 
-  networking.hostName = "server-services";
+  networking.hostName = "apps";
   networking.firewall.allowedTCPPorts = [
     80
     443

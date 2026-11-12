@@ -23,11 +23,11 @@
         user = "thomas";
         forwardAgent = true;
       };
-      "server-mail" = {
+      "mail" = {
         hostname = "mail.seeley.me";
         user = "root";
       };
-      "server-services" = {
+      "apps" = {
         hostname = "5.161.198.149";
         user = "root";
       };

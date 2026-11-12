@@ -89,8 +89,8 @@
       };
 
       nixosConfigurations = {
-        "server-mail" = mkNixosSystem "server-mail" "x86_64-linux";
-        "server-services" = mkNixosSystem "server-services" "x86_64-linux";
+        "mail" = mkNixosSystem "mail" "x86_64-linux";
+        "apps" = mkNixosSystem "apps" "x86_64-linux";
         "thinky" = mkNixosSystem "thinky" "x86_64-linux";
       };
 

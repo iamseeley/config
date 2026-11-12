@@ -8,7 +8,7 @@
     ../../modules/services/stalwart.nix
   ];
 
-  networking.hostName = "server-mail";
+  networking.hostName = "mail";
 
   swapDevices = [
     {

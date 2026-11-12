@@ -1,7 +1,7 @@
 default:
     @just --list
 
-# Deploy a NixOS host: just deploy server-services [switch|dry-activate|boot]
+# Deploy a NixOS host: just deploy apps [switch|dry-activate|boot]
 deploy host action="switch":
     nix run nixpkgs#nixos-rebuild -- {{action}} --flake .#{{host}} --target-host {{host}} --build-host {{host}}
 
@@ -24,4 +24,4 @@ rekey:
 # Publish the latest tseeley.com commit
 site:
     nix flake update tseeley-site
-    just deploy server-services
+    just deploy apps
